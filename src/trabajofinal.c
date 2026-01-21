@@ -37,6 +37,15 @@ int main()
         switch (opcion)
         {
         case 1:
+
+            if (tarea_count == 0)
+            {
+                system("cls");
+                printf("No tienes tareas. \n");
+                system("pause");
+                break;
+            }
+
             do
             {
                 system("cls");
@@ -47,81 +56,85 @@ int main()
                 printf("[4] Terminadas\n");
                 printf("[0] Volver\n");
                 scanf("%d", &menutareas);
-                system("cls");
 
                 switch (menutareas)
                 {
                 case 1:
-                    if (tarea_count == 0)
+                    system("cls");
+                    printf("Todas las tareas:\n");
+                    for (int i = 0; i < tarea_count; i++)
                     {
-                        system("cls");
-                        printf("No tienes tareas. \n");
-                        system("pause");
-                        break;
+                        printf("[%d] %s\n", i + 1, tareas[i].titulo);
                     }
-                    else
+
+                    printf("Seleccione una tarea para ver detalles (0 para volver): ");
+                    scanf("%d", &seleccion_tarea);
+
+                    system("cls");
+
+                    if (seleccion_tarea > 0 && seleccion_tarea <= tarea_count)
                     {
+                        int i = seleccion_tarea - 1;
+                        printf("Detalles de la tarea seleccionada:\n");
+                        printf("Tarea: %d \n", seleccion_tarea);
+                        printf("Título: %s \n", tareas[i].titulo);
+                        printf("Descripción: %s \n", tareas[i].descripcion);
+                        printf("Estado: %s \n", tareas[i].estado);
+                        printf("Dificultad: %d \n", tareas[i].dificultad);
+                        printf("Fecha de vencimiento: %s \n", tareas[i].Vencimiento);
+                        printf("\n");
+
+                        printf("¿Desea editar esta tarea? (E para editar / 0 para volver): ");
+                        scanf(" %c", &opcion_edicion);
+
                         system("cls");
-                        printf("Todas las tareas:\n");
-                        for (int i = 0; i < tarea_count; i++)
-                        {
-                            printf("[%d] %s\n", i + 1, tareas[i].titulo);
-                        }
-                        printf("Seleccione una tarea para ver detalles (0 para volver): ");
-                        scanf("%d", &seleccion_tarea);
-                        if (seleccion_tarea > 0 && seleccion_tarea <= tarea_count)
-                        {
-                            int i = seleccion_tarea - 1;
+
+                        if (opcion_edicion == 'E' || opcion_edicion == 'e')
+                        { // uso comillas simples ('E') porque mi variable es de tipo char (un solo carácter). En C, las comillas dobles ("E") se usan para cadenas de texto (strings) y no se pueden comparar directamente con un char.
+
+                            printf("Esta es la tarea que elegiste, editando la tarea %d...\n\n", seleccion_tarea);
+
                             system("cls");
-                            printf("Detalles de la tarea seleccionada:\n");
-                            printf("Tarea: %d \n", seleccion_tarea);
-                            printf("Título: %s \n", tareas[i].titulo);
-                            printf("Descripción: %s \n", tareas[i].descripcion);
-                            printf("Estado: %s \n", tareas[i].estado);
-                            printf("Dificultad: %d \n", tareas[i].dificultad);
-                            printf("Fecha de vencimiento: %s \n", tareas[i].Vencimiento);
-                            printf("\n");
+                            printf("Nuevo titulo: ");
+                            scanf(" %[^\n]", tareas[i].titulo);
 
-                            printf("¿Desea editar esta tarea? (E para editar / 0 para volver): ");
-                            scanf(" %c", &opcion_edicion);
+                            system("cls");
+                            printf("Nueva descripcion: ");
+                            scanf(" %[^\n]", tareas[i].descripcion);
 
-                            if (opcion_edicion == 'E' || opcion_edicion == 'e')
-                            { // uso comillas simples ('E') porque mi variable es de tipo char (un solo carácter). En C, las comillas dobles ("E") se usan para cadenas de texto (strings) y no se pueden comparar directamente con un char.
+                            system("cls");
+                            printf("Nuevo estado (pendiente, en curso, terminada): ");
+                            scanf(" %[^\n]", tareas[i].estado);
 
-                                printf("Esta es la tarea que elegiste,editando tarea %d...\n", seleccion_tarea);
-
-                                printf("Nuevo titulo: ");
-                                scanf(" %[^\n]", tareas[i].titulo);
-
-                                printf("Nueva descripcion: ");
-                                scanf(" %[^\n]", tareas[i].descripcion);
-
-                                printf("Nuevo estado (pendiente, en curso, terminada): ");
-                                scanf(" %[^\n]", tareas[i].estado);
-
-                                do
-                                {
-                                    printf("Nueva dificultad (1-3): ");
-                                    scanf("%d", &tareas[i].dificultad);
-
-                                    if (tareas[i].dificultad < 1 || tareas[i].dificultad > 3)
-                                    {
-                                        printf("Dificultad invalida. Debe ser entre 1 y 3. \n");
-                                    }
-                                } while (tareas[i].dificultad < 1 || tareas[i].dificultad > 3);
-
-                                printf("Nueva fecha de vencimiento (DD/MM/AAAA): ");
-                                scanf(" %[^\n]", tareas[i].Vencimiento);
-
-                                printf("Tarea editada con exito. \n");
-                                system("pause");
-                            }
-                            else
+                            do
                             {
-                                printf("Numero invalido, \n");
-                            }
+                                system("cls");
+                                
+                                printf("Nueva dificultad (1-3): ");
+                                scanf("%d", &tareas[i].dificultad);
+
+                                if (tareas[i].dificultad < 1 || tareas[i].dificultad > 3)
+                                {
+                                    printf("Dificultad invalida. Debe ser entre 1 y 3. \n");
+                                }
+
+                                
+                            } while (tareas[i].dificultad < 1 || tareas[i].dificultad > 3);
+
+                            system("cls");
+                            printf("Nueva fecha de vencimiento: ");
+                            scanf(" %[^\n]", tareas[i].Vencimiento);
+
+                            system("cls");
+                            printf("Tarea editada con exito. \n");
+                            system("pause");
+                        }
+                        else
+                        {
+                            printf("Opcion invalida, \n");
                         }
                     }
+
                     break;
 
                 case 2:
@@ -177,7 +190,9 @@ int main()
                                 if (tareas[i].dificultad < 1 || tareas[i].dificultad > 3)
                                 {
                                     printf("Dificultad invalida. Debe ser entre 1 y 3. \n");
-                                }
+                                    system("pause");
+                                    tareas[i].dificultad = 0; // Reiniciar la dificultad para evitar un bucle infinito
+                                } 
                             } while (tareas[i].dificultad < 1 || tareas[i].dificultad > 3);
 
                             printf("Tarea editada con exito. \n");
@@ -327,6 +342,14 @@ int main()
 
         case 2:
         {
+            if (tarea_count == 0)
+            {
+                system("cls");
+                printf("No tienes tareas. \n");
+                system("pause");
+                break;
+            }
+
             char buscar_titulo[100];
             int encontrado = 0;
 
@@ -389,6 +412,7 @@ int main()
                             if (tareas[i].dificultad < 1 || tareas[i].dificultad > 3)
                             {
                                 printf("Dificultad invalida. Debe ser entre 1 y 3. \n");
+                                system("pause");
                             }
                         } while (tareas[i].dificultad < 1 || tareas[i].dificultad > 3);
 
@@ -407,6 +431,7 @@ int main()
         }
 
         case 3:
+            system("cls");
             printf("Ingrese el titulo de la tarea: ");
             scanf(" %[^\n]", tareas[tarea_count].titulo);
             printf("Ingrese la descripcion de la tarea: ");
