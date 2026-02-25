@@ -229,7 +229,6 @@ int main()
                                 {
                                     printf("Dificultad invalida. Debe ser entre 1 y 3. \n");
                                     system("pause");
-                                    tareas[i].dificultad = 0;
                                 }
                             } while (!(tareas[i].dificultad == '1' || tareas[i].dificultad == '2' || tareas[i].dificultad == '3'));
 
