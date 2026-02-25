@@ -1,28 +1,25 @@
 #include <stdio.h>
-#include <stdlib.h>  
-#include <windows.h> 
-#include <string.h>  
+#include <stdlib.h>
+#include <windows.h>
+#include <string.h>
 
-typedef struct 
+typedef struct
 {
     char titulo[100];
     char descripcion[100];
     char estado[10];
     char dificultad;
     char Vencimiento[11];
-    
-} tarea;
 
+} tarea;
 
 void guardarTareas(tarea tareas[], int contador)
 {
 
     FILE *archivo = fopen("mis_tareas.dat", "wb");
 
-
     if (archivo == NULL)
         return;
-
 
     fwrite(&contador, sizeof(int), 1, archivo);
 
@@ -31,17 +28,15 @@ void guardarTareas(tarea tareas[], int contador)
     fclose(archivo);
 }
 
-
 int cargarTareas(tarea tareas[])
 {
 
     FILE *archivo = fopen("mis_tareas.dat", "rb");
-    
 
     int contador = 0;
 
     if (archivo == NULL)
-        return 0; 
+        return 0;
 
     fread(&contador, sizeof(int), 1, archivo);
 
@@ -54,11 +49,11 @@ int cargarTareas(tarea tareas[])
 
 int main()
 {
-    SetConsoleOutputCP(65001); 
+    SetConsoleOutputCP(65001);
 
     int opcion;
     int menutareas;
-    tarea tareas[200]; 
+    tarea tareas[200];
     int seleccion_tarea;
     char opcion_edicion;
     int tarea_count = cargarTareas(tareas);
@@ -130,7 +125,7 @@ int main()
                         system("cls");
 
                         if (opcion_edicion == 'E' || opcion_edicion == 'e')
-                        { 
+                        {
 
                             printf("Esta es la tarea que elegiste, editando la tarea %d...\n\n", seleccion_tarea);
 
@@ -153,13 +148,13 @@ int main()
                                 printf("Nueva dificultad (1-3): ");
                                 scanf("%s", &tareas[i].dificultad);
 
-                                if (!(tareas[i].dificultad == '1' || tareas[i].dificultad == '2' ||tareas[i].dificultad == '3'))
+                                if (!(tareas[i].dificultad == '1' || tareas[i].dificultad == '2' || tareas[i].dificultad == '3'))
                                 {
                                     printf("Dificultad invalida. Debe ser entre 1 y 3. \n");
                                     system("pause");
                                 }
 
-                            } while (!(tareas[i].dificultad == '1' || tareas[i].dificultad == '2' ||tareas[i].dificultad == '3'));
+                            } while (!(tareas[i].dificultad == '1' || tareas[i].dificultad == '2' || tareas[i].dificultad == '3'));
 
                             system("cls");
                             printf("Nueva fecha de vencimiento: ");
@@ -185,7 +180,7 @@ int main()
                     for (int i = 0; i < tarea_count; i++)
                     {
                         if (strcmp(tareas[i].estado, "pendiente") == 0)
-                        { 
+                        {
                             printf("[%d] %s \n", i + 1, tareas[i].titulo);
                         }
                     }
@@ -209,7 +204,7 @@ int main()
                         scanf(" %c", &opcion_edicion);
 
                         if (opcion_edicion == 'E' || opcion_edicion == 'e')
-                        { 
+                        {
 
                             printf("Esta es la tarea que elegiste,editando tarea %d...\n", seleccion_tarea);
 
@@ -234,9 +229,9 @@ int main()
                                 {
                                     printf("Dificultad invalida. Debe ser entre 1 y 3. \n");
                                     system("pause");
-                                    tareas[i].dificultad = 0; 
+                                    tareas[i].dificultad = 0;
                                 }
-                            } while (!(tareas[i].dificultad == '1' || tareas[i].dificultad == '2' ||tareas[i].dificultad == '3'));
+                            } while (!(tareas[i].dificultad == '1' || tareas[i].dificultad == '2' || tareas[i].dificultad == '3'));
 
                             printf("Tarea editada con exito. \n");
 
@@ -278,7 +273,7 @@ int main()
                         scanf(" %c", &opcion_edicion);
 
                         if (opcion_edicion == 'E' || opcion_edicion == 'e')
-                        { 
+                        {
 
                             printf("Esta es la tarea que elegiste,editando tarea %d...\n", seleccion_tarea);
 
@@ -344,7 +339,7 @@ int main()
                         scanf(" %c", &opcion_edicion);
 
                         if (opcion_edicion == 'E' || opcion_edicion == 'e')
-                        { 
+                        {
 
                             printf("Esta es la tarea que elegiste,editando tarea %d...\n", seleccion_tarea);
 
@@ -406,7 +401,7 @@ int main()
             int encontrado = 0;
 
             printf("Ingrese el titulo de la tarea a buscar: ");
-            scanf(" %[^\n]", buscar_titulo); 
+            scanf(" %[^\n]", buscar_titulo);
             for (int i = 0; i < tarea_count; i++)
             {
                 if (strcmp(tareas[i].titulo, buscar_titulo) == 0)
@@ -443,7 +438,7 @@ int main()
                     scanf(" %c", &opcion_edicion);
 
                     if (opcion_edicion == 'E' || opcion_edicion == 'e')
-                    { 
+                    {
 
                         printf("Esta es la tarea que elegiste,editando tarea %d...\n", seleccion_tarea);
 
@@ -484,7 +479,7 @@ int main()
                 }
             }
         }
-
+        break;
         case 3:
             system("cls");
             printf("Ingrese el titulo de la tarea: ");
@@ -493,8 +488,18 @@ int main()
             scanf(" %[^\n]", tareas[tarea_count].descripcion);
             printf("Ingrese el estado de la tarea(pendiente, en curso, terminada): ");
             scanf(" %[^\n]", tareas[tarea_count].estado);
-            printf("Ingrese la dificultad de la tarea (1-3): ");
-            scanf("%s", &tareas[tarea_count].dificultad);
+            do
+            {
+                printf("Nueva dificultad (1-3): ");
+                scanf("%s", &tareas[tarea_count].dificultad);
+
+                if (!(tareas[tarea_count].dificultad == '1' || tareas[tarea_count].dificultad == '2' || tareas[tarea_count].dificultad == '3'))
+                {
+                    printf("Dificultad invalida. Debe ser entre 1 y 3. \n");
+                    system("pause");
+                }
+            } while (!(tareas[tarea_count].dificultad == '1' || tareas[tarea_count].dificultad == '2' || tareas[tarea_count].dificultad == '3'));
+
             printf("Ingrse la fecha de vencimiento de la tarea (DD/MM/AAAA): ");
             scanf(" %[^\n]", tareas[tarea_count].Vencimiento);
             tarea_count++;
@@ -507,6 +512,7 @@ int main()
 
         default:
             printf("Opcion no valida.\n");
+            system("pause");
             break;
         }
     } while (opcion != 4);
